@@ -52,12 +52,11 @@ class App extends Component {
       searchValue : '',
       cartTotal : 0,
       cartItems :0,
-      
+      sortedArray : []
 
     }
   }
-
-  
+ 
       
  popUpSummary = (name,glaze,pack,price) => {
   let popup = document.getElementById("popupSummary");
@@ -71,10 +70,11 @@ class App extends Component {
 }
 
 
-  addToCart = ( name, glaze, pack, price) => {
+  addToCart = ( image, name, glaze, pack, price) => {
 
     const rollobj = 
     {
+      rollimg: image,
       rollname: name,
       rollglaze: glaze,
       rollpack: pack,
@@ -116,35 +116,41 @@ class App extends Component {
   }
 
 
-  handleSort = (event) => {
-    this.setState(prevState => ({
-      ...prevState,
-      sortType: event.target.value
-    }))
+  handleSort = (sortBy) => {
+    let sortedItems = []
+    this.state.sortedArray = this.state.rollData;
+    switch(sortBy.target.value){
+      case "Name":
+        sortedItems = this.state.sortedArray.sort((a,b) => a.rollName.toLowerCase() >= b.rollName.toLowerCase() ? 1 : -1)
+        console.log('sortedItems in name = ',sortedItems)
+        break
+      case "Base Price":
+        sortedItems = this.state.sortedArray.sort((a,b) => a.rollPrice.slice(2) - b.rollPrice.slice(2))
+        break
+      default:
+        //console.log("Not an option")
+        sortedItems = this.state.rollData
+      }
+      this.setState({
+        sortedArray: sortedItems,
+        rollData:sortedItems,
+        sortType:sortBy
+      })
+      //console.log(' sortedArray', sortedItems);
 
   }
 
+
   handleSearch = (event) => {
     let searchInput = document.getElementById("search-input");
-    console.log('searchInput =', searchInput);
 
     // access input values here
     const searchText = searchInput.value.toLowerCase();
-    console.log('handleSubmit ran = ', searchText);
 
     this.setState(prevState => ({
       ...prevState,
       searchValue: searchText
     }))
-
-    //loop over rollData
-    // for (let i=0; i<6; i++) {
-    //   if(this.state.rollData[i].rollName.toLowerCase().includes(searchText) )
-    //   {
-    //     console.log(this.state.rollData[i].rollName);
-    //   }
-
-    // }
   }
 
   // removeButtonHandler = (rollIndex) => {
@@ -192,7 +198,8 @@ class App extends Component {
 
       </div>        
           <div className="gallery">
-                  {this.state.rollData.map(
+                  { 
+                  this.state.rollData.map(
                   (roll, idx) => {
                     let check=0;
 
@@ -200,7 +207,7 @@ class App extends Component {
                     { return <div>No match!</div> }
 
                     if ((this.state.searchValue == '') || 
-                    (this.state.rollData[idx].rollName.toLowerCase().includes(this.state.searchValue))) //&& idx<3
+                    (this.state.rollData[idx].rollName.toLowerCase().includes(this.state.searchValue))) 
                      {
                       return <Roll 
                       key={idx}
@@ -247,7 +254,6 @@ class App extends Component {
                       packSize={this.state.rollData[2].packSize} 
                       onAdd={this.addToCart}
                    /> */}
-              {/* <div className="item-row"> */}
              
                    {/* <Roll
                       rollIndex={3}
@@ -276,7 +282,6 @@ class App extends Component {
                       packSize={this.state.rollData[5].packSize} 
                       onAdd={this.addToCart}
                    /> */}
-                {/* </div> */}
             </div>
       </div>
     );

@@ -41,20 +41,6 @@ class Roll extends Component {
 
   handlePackSizeChange = (event) => {
     const newPackSize = event.target.value;
-
-    // console.log('selected class of button = ' + '.p' + event.target.value);
-    // const selectedClassOfButton = '.p' + event.target.value;
-
-    // const selectedbutton = document.querySelector(selectedClassOfButton);
-    // console.log('selectedbutton = ', selectedbutton);
-
-    // document.querySelector('.p1').style.backgroundColor = 'white'; 
-    // document.querySelector('.p3').style.backgroundColor = 'white'; 
-    // document.querySelector('.p6').style.backgroundColor = 'white'; 
-    // document.querySelector('.p12').style.backgroundColor = 'white'; 
-
-    // event.target.style.backgroundColor = 'grey'; 
-
     this.setState(prevState => ({
       ...prevState,
       packSize: newPackSize
@@ -114,7 +100,7 @@ class Roll extends Component {
                   <div className="item-final">
                     <p className="item-cost" id="baseprice">{this.calcPrice()}</p>
                     <button className="item-cart" type="button" 
-                    onClick={() => this.props.onAdd(this.props.rollName, this.state.glazingType, this.state.packSize,this.calcPrice())}>Add to Cart</button>
+                    onClick={() => this.props.onAdd(this.props.imageURL, this.props.rollName, this.state.glazingType, this.state.packSize,this.calcPrice())}>Add to Cart</button>
                   </div>
                 </div>
             </div>
