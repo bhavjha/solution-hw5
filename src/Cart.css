@@ -11,10 +11,31 @@
     font-size: 20px;
 }
 
-
-
 .cart-top-boundary {
     height:10px;
     background:rgba(69, 48, 48, 0.652);
 }
 
+.cart-top-items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.cart-top-item {
+    width: 200px;
+    height: 300px;
+    margin: 20px 0 0 200px ;
+    text-align: center;
+}
+
+.cart-top-summary-image {
+    width: 150px;
+    height: 150px;   
+    border: 2px solid #000;
+}
+
+#removeFromCart {
+    border: 0px;
+    text-decoration: underline;
+}

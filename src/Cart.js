@@ -6,31 +6,69 @@ class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cartItems:0,
             cartTotal:0,
             cartArray:[]
         };   
       }
 
+      removeButtonHandler = (rollIndex, rollprice) => {
+        const newRollData = this.props.cartArray;
+        newRollData.splice(rollIndex, 1);
+
+        let newPrice = 0
+        this.props.cartArray.map((roll) => 
+                            {
+                              newPrice += roll.rollpack * roll.rollprice
+                                    // <div>Pack size: {roll.rollpack}</div>
+                                    // <div><b>{roll.rollprice}</b></div>
+                                   
+                            })
+
+        this.setState(prevState => ({
+          ...prevState,
+          cartArray: newRollData,
+          cartTotal: newPrice //(this.props.cartTotal-rollprice),
+        }))
+        // let numberlist = [1, 2, 3];
+        // numberlist.splice(0, 1);
+        // // [2, 3]
+        // numberlist.splice(0, 2);
+        // // [3]
+        // numberlist.splice(1, 1);
+        // // [1, 3]
+        // numberlist.splice(1, 2);
+        // // [1]
+        // numberlist.splice(0, 1, 4);
+        // // [4, 2, 3]
+      }
+
       componentDidUpdate(){}
 
     render() {
-        console.log('CART =', this.props.cartArray) ;
-
-        //  <img className="item-img" src={ process.env.PUBLIC_URL + this.props.imageURL} alt="cinnamon roll"></img>
-        //rollimg, rollname, rollglaze, rollpack, rollprice
-
         return(
             <div className='cart-top-list' id="cart-top-list">
                 <hr className='cart-top-boundary'></hr>
                 <div className='cart-top-summary'>
-                    <p id="cart-top-summary-items">Shopping cart ({this.props.cartItems} items)</p>
+                    <p id="cart-top-summary-items">Shopping cart ({this.props.cartArray.length} items)</p>
                     <p id="cart-top-summary-items-total">Total: $ {this.props.cartTotal}</p>
                 </div>
-                <div className='cart-top-items'>
-                    <div className='cart-top-item'>
-                    {/* <img className="item-img" src={ process.env.PUBLIC_URL + this.props.cartArray[0].rollimg} alt="cinnamon roll"></img> */}
-                    </div>
+                <div id='cart-top-items'>
+                        {
+                            this.props.cartArray.map((roll) => 
+                            {
+                              //console.log(roll)
+                              return (
+                                  <div className='cart-top-item'>
+                                    <img src={process.env.PUBLIC_URL+ roll.rollimg} className="cart-top-summary-image"  />
+                                    <div>{roll.rollname}</div>
+                                    <div>Glazing: {roll.rollglaze}</div>
+                                    <div>Pack size: {roll.rollpack}</div>
+                                    <div><b>{roll.rollprice}</b></div>
+                                    <button type="button" id="removeFromCart" onClick={() => this.removeButtonHandler(roll.index, roll.rollprice)}>Remove</button>
+                                  </div>
+                                )
+                            })
+                        }
                 </div>
                 <hr className='cart-top-boundary'></hr>
 

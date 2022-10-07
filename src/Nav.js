@@ -7,10 +7,10 @@ class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cartState : true
+      cartState : true,
+
     }
 }
-
 
   
 cartHide = () => {
@@ -34,8 +34,8 @@ cartHide = () => {
 
   render() {
     return(
+       
         <div className="navcontainer"> 
-
         <div className="logo">
           <img className="logo-thumbnail" src={process.env.PUBLIC_URL + '/assets/img/logo-01.svg'} alt="Logo icon"/>
         </div>
@@ -44,11 +44,13 @@ cartHide = () => {
           <div className="pages">
             <p className="nav-items">PRODUCTS</p>
             <p className="nav-items"  onClick={this.cartHide}>CART</p>
+            {this.state.displayCart} 
+
           </div>
 
-        {/* <div class="cart-summary">
-          <p id="cart-summary-items" class="cart-summary-items">0 items</p>
-          <p id="cart-summary-items-total" class="cart-summary-items">Total: $0.00</p>
+        {/* <div className="cart-summary">
+          <p id="cart-summary-items" className="cart-summary-items">0 items</p>
+          <p id="cart-summary-items-total" className="cart-summary-items">Total: $0.00</p>
         </div>  */}
 
         <div className="popup">

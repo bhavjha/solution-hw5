@@ -8,9 +8,7 @@ class Roll extends Component {
     this.state = {
       packSize:1,
       glazingType:"Keep Original",
-      // isSelected: false
     };    
-    // this.togglePackSize = this.togglePackSize.bind(this);
   }
 
 

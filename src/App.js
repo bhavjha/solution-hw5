@@ -80,10 +80,10 @@ class App extends Component {
       rollpack: pack,
       rollprice: price
     }
-    console.log('rollobj',rollobj);
+    //console.log('rollobj',rollobj);
 
       //add to array 
-       console.log('cartArray',this.state.cartArray);
+       //console.log('cartArray',this.state.cartArray);
 
       this.state.cartArray.push(rollobj);
       
@@ -137,7 +137,6 @@ class App extends Component {
         sortType:sortBy
       })
       //console.log(' sortedArray', sortedItems);
-
   }
 
 
@@ -153,33 +152,20 @@ class App extends Component {
     }))
   }
 
-  // removeButtonHandler = (rollIndex) => {
-  //   const newRollData = this.state.rollData;
-  //   newRollData.splice(rollIndex, 1);
-  //   this.setState(prevState => ({
-  //     ...prevState,
-  //     rollData: newRollData
-  //   }))
-  //   // let numberlist = [1, 2, 3];
-  //   // numberlist.splice(0, 1);
-  //   // // [2, 3]
-  //   // numberlist.splice(0, 2);
-  //   // // [3]
-  //   // numberlist.splice(1, 1);
-  //   // // [1, 3]
-  //   // numberlist.splice(1, 2);
-  //   // // [1]
+  
 
-  //   // numberlist.splice(0, 1, 4);
-  //   // // [4, 2, 3]
-  // }
- 
   render() {
     return (
       <div className="App">
-        <Nav />
+        <Nav 
 
-        <Cart cartItems={this.state.cartItems} cartTotal={this.state.cartTotal} cartArray={this.state.cartArray} />
+        />
+
+        <Cart 
+          cartTotal={this.state.cartTotal} 
+          cartArray={this.state.cartArray} 
+
+          />
 
       <div className="searchsort">
         <div className="search">
@@ -216,11 +202,11 @@ class App extends Component {
                       rollName={roll.rollName}
                       rollPrice={roll.rollPrice}
                       onAdd={this.addToCart}
-                      //onRemove={this.removeButtonHandler} 
+                      onRemove={this.removeButtonHandler} 
                       />
                      } 
                      else {
-                      check = check +1; console.log('check = ',check);
+                      check = check +1; //console.log('check = ',check);
                       return <div />
                       }
                   }
