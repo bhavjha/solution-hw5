@@ -70,7 +70,7 @@ class Roll extends Component {
     return (finalCost);
   };
 
-  render() {
+  changeSelectedColor = (option) => {
 
     const packSizeSelectedStyle = {
       backgroundColor: 'grey'
@@ -79,6 +79,12 @@ class Roll extends Component {
     const packSizeUnselectedStyle = {
       backgroundColor: 'white'
     }
+    return this.state.packSize==option ? packSizeSelectedStyle : packSizeUnselectedStyle;
+  }
+
+  render() {
+
+  
 
     return(
         <div className="item">
@@ -99,10 +105,10 @@ class Roll extends Component {
                   <div className="item-pack-size">
                     <p className="pack-p">Pack size</p>
                     <div className="pack"  >
-                      <button type="button" className="pack-size p1" onClick={this.handlePackSizeChange} style={ this.state.packSize===1 ? packSizeSelectedStyle : packSizeUnselectedStyle} value={1} >1</button> 
-                      <button type="button" className="pack-size p3" onClick={this.handlePackSizeChange} style={ this.state.packSize===3 ? packSizeSelectedStyle : packSizeUnselectedStyle} value={3}>3</button>
-                      <button type="button" className="pack-size p6" onClick={this.handlePackSizeChange} style={ this.state.packSize===6 ? packSizeSelectedStyle : packSizeUnselectedStyle} value={6}>6</button>
-                      <button type="button" className="pack-size p12" onClick={this.handlePackSizeChange} style={ this.state.packSize===12 ? packSizeSelectedStyle : packSizeUnselectedStyle} value={12}>12</button>
+                      <button type="button" className="pack-size p1" onClick={this.handlePackSizeChange} style={ this.changeSelectedColor(1)} value={1} >1</button> 
+                      <button type="button" className="pack-size p3" onClick={this.handlePackSizeChange} style={ this.changeSelectedColor(3)} value={3}>3</button>
+                      <button type="button" className="pack-size p6" onClick={this.handlePackSizeChange} style={ this.changeSelectedColor(6)} value={6}>6</button>
+                      <button type="button" className="pack-size p12" onClick={this.handlePackSizeChange} style={ this.changeSelectedColor(12)} value={12}>12</button>
                     </div>
                   </div>
                   <div className="item-final">

@@ -48,13 +48,16 @@ class App extends Component {
       glazingType: "Keep Original",
       packSize: 1,
       cartArray : [],
-      sortType : '',
-      searchValue : ''
+      sortType : 'Name',
+      searchValue : '',
+      cartTotal : 0,
+      cartItems :0,
+      
 
     }
   }
 
-
+  
       
  popUpSummary = (name,glaze,pack,price) => {
   let popup = document.getElementById("popupSummary");
@@ -77,47 +80,49 @@ class App extends Component {
       rollpack: pack,
       rollprice: price
     }
+    console.log('rollobj',rollobj);
+
       //add to array 
-      console.log('cartArray',this.state.cartArray);
+       console.log('cartArray',this.state.cartArray);
+
+      this.state.cartArray.push(rollobj);
       
       //call popup with the new object - loop over objects to get total price
       this.popUpSummary(name, glaze, pack, price);
       setTimeout(this.popUpHide,3000);
 
-  
-      //Update cart total and number of items
-      let cartSummaryItems = document.getElementById("cart-summary-items");
-      let cartSummaryItemsTotal = document.getElementById("cart-summary-items-total");
 
-      let cartTotal = 0.00;
-      let cartItems = 0;
-
+      let currentPrice = parseFloat((rollobj.rollprice).slice(2)); // 19.994058346473974957569
+      currentPrice = currentPrice.toFixed(2); // "19.99"
+      currentPrice = Number(currentPrice);  // 19.99
+      this.state.cartTotal += currentPrice;
+      this.state.cartItems +=1;
 
       this.setState(prevState => ({
         ...prevState,
         //rollData: newRollData,
-        cartArray: [...prevState.cartArray, rollobj],
+        cartArray: [...this.state.cartArray], //[...prevState.cartArray, rollobj],
         glazingType: "",
         packSize: "",
         selectedRollIndex: null,
+        cartItems: this.state.cartItems,
+        cartTotal: this.state.cartTotal
       }), 
       ()=>{
 
-      this.state.cartArray.map(cartItem => {
-        let totalprice = (cartItem.rollprice).slice(2); 
-        cartTotal += parseFloat(totalprice); 
-        cartItems +=1;
-      });
 
-      cartSummaryItems.innerText = cartItems +" items";
-      cartSummaryItemsTotal.innerText = "Total: $" + cartTotal;
-      console.log("CART");
-      
       }
       )
   }
 
 
+  handleSort = (event) => {
+    this.setState(prevState => ({
+      ...prevState,
+      sortType: event.target.value
+    }))
+
+  }
 
   handleSearch = (event) => {
     let searchInput = document.getElementById("search-input");
@@ -126,25 +131,49 @@ class App extends Component {
     // access input values here
     const searchText = searchInput.value.toLowerCase();
     console.log('handleSubmit ran = ', searchText);
-    //event.preventDefault(); 
+
+    this.setState(prevState => ({
+      ...prevState,
+      searchValue: searchText
+    }))
 
     //loop over rollData
-    for (let i=0; i<6; i++) {
-      if(this.state.rollData[i].rollName.toLowerCase().includes(searchText) )
-      {
-        console.log(this.state.rollData[i].rollName);
+    // for (let i=0; i<6; i++) {
+    //   if(this.state.rollData[i].rollName.toLowerCase().includes(searchText) )
+    //   {
+    //     console.log(this.state.rollData[i].rollName);
+    //   }
 
-      }
-
-    }
+    // }
   }
+
+  // removeButtonHandler = (rollIndex) => {
+  //   const newRollData = this.state.rollData;
+  //   newRollData.splice(rollIndex, 1);
+  //   this.setState(prevState => ({
+  //     ...prevState,
+  //     rollData: newRollData
+  //   }))
+  //   // let numberlist = [1, 2, 3];
+  //   // numberlist.splice(0, 1);
+  //   // // [2, 3]
+  //   // numberlist.splice(0, 2);
+  //   // // [3]
+  //   // numberlist.splice(1, 1);
+  //   // // [1, 3]
+  //   // numberlist.splice(1, 2);
+  //   // // [1]
+
+  //   // numberlist.splice(0, 1, 4);
+  //   // // [4, 2, 3]
+  // }
  
   render() {
     return (
       <div className="App">
         <Nav />
 
-        <Cart />
+        <Cart cartItems={this.state.cartItems} cartTotal={this.state.cartTotal} cartArray={this.state.cartArray} />
 
       <div className="searchsort">
         <div className="search">
@@ -163,8 +192,35 @@ class App extends Component {
 
       </div>        
           <div className="gallery">
-              <div className="item-row">
-                   <Roll
+                  {this.state.rollData.map(
+                  (roll, idx) => {
+                    let check=0;
+
+                    if(check==1) 
+                    { return <div>No match!</div> }
+
+                    if ((this.state.searchValue == '') || 
+                    (this.state.rollData[idx].rollName.toLowerCase().includes(this.state.searchValue))) //&& idx<3
+                     {
+                      return <Roll 
+                      key={idx}
+                      rollIndex={idx}
+                      imageURL={roll.imageURL}
+                      rollName={roll.rollName}
+                      rollPrice={roll.rollPrice}
+                      onAdd={this.addToCart}
+                      //onRemove={this.removeButtonHandler} 
+                      />
+                     } 
+                     else {
+                      check = check +1; console.log('check = ',check);
+                      return <div />
+                      }
+                  }
+                  )}
+
+
+                   {/* <Roll
                       rollIndex={0}
                       imageURL={this.state.rollData[0].imageURL}
                       rollName={this.state.rollData[0].rollName}
@@ -190,10 +246,10 @@ class App extends Component {
                       glazingType={this.state.rollData[2].glazingType} 
                       packSize={this.state.rollData[2].packSize} 
                       onAdd={this.addToCart}
-                   />
-                </div>
-              <div className="item-row">
-                   <Roll
+                   /> */}
+              {/* <div className="item-row"> */}
+             
+                   {/* <Roll
                       rollIndex={3}
                       imageURL={this.state.rollData[3].imageURL}
                       rollName={this.state.rollData[3].rollName}
@@ -219,8 +275,8 @@ class App extends Component {
                       glazingType={this.state.rollData[5].glazingType} 
                       packSize={this.state.rollData[5].packSize} 
                       onAdd={this.addToCart}
-                   />
-                </div>
+                   /> */}
+                {/* </div> */}
             </div>
       </div>
     );

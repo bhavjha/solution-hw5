@@ -18,13 +18,18 @@ cartHide = () => {
   if(this.state.cartState)
   {
     cart.style.display = 'none';
-    this.state.cartState = false;
+    this.setState(prevState => ({
+      ...prevState,
+      cartState: false
+    }))
   }
   else
   {
     cart.style.display = 'block';
-    this.state.cartState = true;
-  }
+    this.setState(prevState => ({
+      ...prevState,
+      cartState: true
+    }))  }
 }
 
   render() {
@@ -41,13 +46,13 @@ cartHide = () => {
             <p className="nav-items"  onClick={this.cartHide}>CART</p>
           </div>
 
-        <div class="cart-summary">
+        {/* <div class="cart-summary">
           <p id="cart-summary-items" class="cart-summary-items">0 items</p>
           <p id="cart-summary-items-total" class="cart-summary-items">Total: $0.00</p>
-        </div> 
+        </div>  */}
 
-        <div class="popup">
-          <span class="popuptext" id="popupSummary"><p>Added to cart:</p><p class="summaryOfRoll"></p>
+        <div className="popup">
+          <span className="popuptext" id="popupSummary"><p>Added to cart:</p><p className="summaryOfRoll"></p>
           </span>
         </div>
 
