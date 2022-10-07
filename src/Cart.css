@@ -16,7 +16,7 @@
     background:rgba(69, 48, 48, 0.652);
 }
 
-.cart-top-items {
+#cart-top-items {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -25,7 +25,7 @@
 .cart-top-item {
     width: 200px;
     height: 300px;
-    margin: 20px 0 0 200px ;
+    margin: 20px 0 0 100px ;
     text-align: center;
 }
 
@@ -38,4 +38,8 @@
 #removeFromCart {
     border: 0px;
     text-decoration: underline;
+}
+
+#priceupdated {
+    display: inline;
 }

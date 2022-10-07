@@ -83,8 +83,6 @@ class App extends Component {
     //console.log('rollobj',rollobj);
 
       //add to array 
-       //console.log('cartArray',this.state.cartArray);
-
       this.state.cartArray.push(rollobj);
       
       //call popup with the new object - loop over objects to get total price

@@ -15,20 +15,36 @@ class Cart extends Component {
         const newRollData = this.props.cartArray;
         newRollData.splice(rollIndex, 1);
 
-        let newPrice = 0
-        this.props.cartArray.map((roll) => 
-                            {
-                              newPrice += roll.rollpack * roll.rollprice
-                                    // <div>Pack size: {roll.rollpack}</div>
-                                    // <div><b>{roll.rollprice}</b></div>
+        // let newPrice = 0
+        // // this.props.cartArray.map((roll) => 
+        // newRollData.map((roll) => 
+        //                     {
+        //                       newPrice += roll.rollpack * roll.rollprice
                                    
-                            })
+        //                     })
+
+        let newPrice = 0;
 
         this.setState(prevState => ({
           ...prevState,
           cartArray: newRollData,
-          cartTotal: newPrice //(this.props.cartTotal-rollprice),
-        }))
+          //cartTotal: newPrice //(this.props.cartTotal-rollprice),
+        }),
+        () => {
+        // this.props.cartArray.map((roll) => 
+        newRollData.map((roll) => 
+                            {
+                              newPrice += roll.rollpack * roll.rollprice
+                                   
+                            })
+            
+        }
+        )
+
+        const priceupdate = document.getElementByID("priceupdated");
+        priceupdate.innerHTML = newPrice;
+        
+        
         // let numberlist = [1, 2, 3];
         // numberlist.splice(0, 1);
         // // [2, 3]
@@ -50,7 +66,7 @@ class Cart extends Component {
                 <hr className='cart-top-boundary'></hr>
                 <div className='cart-top-summary'>
                     <p id="cart-top-summary-items">Shopping cart ({this.props.cartArray.length} items)</p>
-                    <p id="cart-top-summary-items-total">Total: $ {this.props.cartTotal}</p>
+                    <p id="cart-top-summary-items-total">Total: $ <p id="priceupdated">{this.props.cartTotal}</p></p>
                 </div>
                 <div id='cart-top-items'>
                         {
