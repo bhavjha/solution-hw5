@@ -150,7 +150,36 @@ class App extends Component {
     }))
   }
 
-  
+  removeButtonHandler = (rollIndex) => {
+
+    console.log("INDEX,", rollIndex);
+    let newRollData = this.state.cartArray;
+    newRollData.splice(rollIndex, 1);
+
+    let newPrice = 0.0;
+    newRollData.map((roll) => 
+      {
+        //console.log(" roll.rollprice=,", roll.rollprice, "roll.rollpack=", roll.rollpack);
+        //console.log("type roll.rollprice=,", typeof(roll.rollprice), "roll.rollpack=", typeof(roll.rollpack));
+
+        let currentPrice = parseFloat((roll.rollprice).slice(2)); // 19.994058346473974957569
+        currentPrice = currentPrice.toFixed(2); // "19.99"
+        currentPrice = Number(currentPrice);  // 19.99
+
+        newPrice += parseFloat( roll.rollpack * currentPrice);
+             
+      })
+      //console.log('current array lenght = ', newRollData.length, 'newroll data=', newRollData);
+
+    this.setState(prevState => ({
+      ...prevState,
+      cartArray: newRollData,
+      cartTotal: newPrice,
+      cartItems: newRollData.length 
+    })
+    )
+
+  }
 
   render() {
     return (
@@ -162,7 +191,8 @@ class App extends Component {
         <Cart 
           cartTotal={this.state.cartTotal} 
           cartArray={this.state.cartArray} 
-
+          removeFromCart={this.removeButtonHandler}
+          cartItems={this.state.cartItems}
           />
 
       <div className="searchsort">
